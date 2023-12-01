@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'home/view/homescreen.dart';
 
 void main() {
@@ -11,7 +10,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       debugShowCheckedModeBanner: false,
       title: "To Do App",
       home: HomeScreen(),
