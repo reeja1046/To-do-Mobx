@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:machine_test/home/model/model.dart';
 import 'package:machine_test/home/view/paymentdetails.dart';
-import 'package:machine_test/home/view/widgets.dart';
+import 'package:machine_test/home/view/widgets/buttons.dart';
+import 'package:machine_test/home/view/widgets/gridview.dart';
+import 'package:machine_test/home/view/widgets/widgets.dart';
 import 'package:machine_test/home/view_model/home_viewmodel.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -13,8 +16,8 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final HomeViewModel _viewModel = HomeViewModel();
 
-  List<String> names = [];
-  List<String> userimage = [];
+  // List<String> names = [];
+  // List<String> userimage = [];
 
   @override
   void initState() {
@@ -55,7 +58,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             ),
           ),
-          buildAlphabetRow(),
+          buildAlphabetRow(_viewModel.users, context),
         ],
       ),
     );
