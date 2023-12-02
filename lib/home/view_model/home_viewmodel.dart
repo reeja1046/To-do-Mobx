@@ -1,11 +1,17 @@
 import 'dart:convert';
-import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:machine_test/home/model/model.dart';
+import 'package:mobx/mobx.dart';
 
-class HomeViewModel extends ChangeNotifier {
-  List<User> users = [];
+part 'home_viewmodel.g.dart';
 
+class HomeViewModel = _HomeViewModelBase with _$HomeViewModel;
+
+abstract class _HomeViewModelBase with Store {
+  @observable
+  ObservableList<User> users = ObservableList();
+
+  @action
   Future<void> fetchUsers() async {
     try {
       var response = await http.get(
@@ -26,8 +32,8 @@ class HomeViewModel extends ChangeNotifier {
           fetchedUsers.add(User(name: fullName, profileImage: userPic));
         }
 
-        users = fetchedUsers;
-        notifyListeners();
+        // Update the observable list
+        users = ObservableList.of(fetchedUsers);
       } else {
         print('Failed to fetch data: ${response.statusCode}');
       }
@@ -36,6 +42,3 @@ class HomeViewModel extends ChangeNotifier {
     }
   }
 }
-
-
-
