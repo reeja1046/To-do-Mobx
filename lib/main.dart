@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:machine_test/home/view_model/home_viewmodel.dart';
 import 'home/view/homescreen.dart';
 
+final viewModel = HomeViewModel();
 void main() {
+  viewModel.fetchUsers();
   runApp(const MyApp());
 }
 

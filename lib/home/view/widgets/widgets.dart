@@ -18,7 +18,7 @@ void showAlertDialog(BuildContext context) {
       return AlertDialog(
         backgroundColor: Color.fromARGB(255, 224, 240, 252),
         title: const Center(child: Text('Enter visitor details')),
-        content: Column(
+        content: Column( 
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

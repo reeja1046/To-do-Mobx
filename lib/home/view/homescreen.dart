@@ -1,10 +1,13 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:machine_test/home/model/model.dart';
 import 'package:machine_test/home/view/paymentdetails.dart';
 import 'package:machine_test/home/view/widgets/buttons.dart';
 import 'package:machine_test/home/view/widgets/gridview.dart';
 import 'package:machine_test/home/view/widgets/widgets.dart';
-import 'package:machine_test/home/view_model/home_viewmodel.dart';
+import 'package:machine_test/main.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -14,11 +17,13 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final _viewModel = HomeViewModel();
+  TextEditingController paymentController = TextEditingController();
+  bool isOn = false;
 
   @override
   void initState() {
-    _viewModel.fetchUsers();
+    viewModel.fetchUsers();
+    paymentController.text = '2500';
     super.initState();
   }
 
@@ -29,7 +34,7 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: buildAppBar(),
       body: Observer(
         builder: (_) {
-          if (_viewModel.users.isEmpty) {
+          if (viewModel.users.isEmpty) {
             return Center(
               child: CircularProgressIndicator(),
             );
@@ -39,7 +44,201 @@ class _HomeScreenState extends State<HomeScreen> {
                 Positioned.fill(
                   child: Padding(
                     padding: const EdgeInsets.all(15.0),
-                    child: buildGridView(_viewModel.users),
+                    child: GridView.builder(
+                      itemCount: viewModel.users.length,
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        crossAxisSpacing: 15.0,
+                        mainAxisSpacing: 15.0,
+                      ),
+                      itemBuilder: (BuildContext context, int index) {
+                        User user = viewModel.users[index];
+                        return GridTile(
+                          child: GestureDetector(
+                            onTap: () {
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    content: SizedBox(
+                                      width: MediaQuery.of(context).size.width *
+                                          0.7,
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              0.28,
+                                      child: SingleChildScrollView(
+                                        child: Column(
+                                          children: [
+                                            _buildDialogContentRow(user,
+                                                user.profileImage, user.name),
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Text('UPI'),
+                                                Switch(
+                                                  value: viewModel
+                                                      .users[index].isUpi,
+                                                  onChanged: (value) {
+                                                    log(value.toString());
+                                                    log(user.isUpi.toString());
+                                                    setState(() {
+                                                      isOn = !isOn;
+                                                      viewModel.users[index]
+                                                          .isUpi = isOn;
+                                                      viewModel.users[index]
+                                                          .isCash = false;
+                                                      viewModel.users[index]
+                                                          .isLater = false;
+                                                    });
+                                                  },
+                                                ),
+                                              ],
+                                            ),
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Text('Cash'),
+                                                Switch(
+                                                  value: viewModel
+                                                      .users[index].isCash,
+                                                  onChanged: (value) {
+                                                    log(value.toString());
+                                                    log(user.isCash.toString());
+                                                    setState(() {
+                                                      isOn = !isOn;
+                                                      viewModel.users[index]
+                                                          .isCash = isOn;
+                                                      viewModel.users[index]
+                                                          .isUpi = false;
+                                                      viewModel.users[index]
+                                                          .isLater = false;
+                                                    });
+                                                  },
+                                                ),
+                                              ],
+                                            ),
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Text('Later'),
+                                                Switch(
+                                                  value: viewModel
+                                                      .users[index].isLater,
+                                                  onChanged: (value) {
+                                                    log(value.toString());
+                                                    log(user.isUpi.toString());
+                                                    setState(() {
+                                                      isOn = !isOn;
+                                                      viewModel.users[index]
+                                                          .isLater = isOn;
+                                                      viewModel.users[index]
+                                                          .isUpi = false;
+                                                      viewModel.users[index]
+                                                          .isCash = false;
+                                                    });
+                                                  },
+                                                ),
+                                              ],
+                                            ),
+
+                                            // _buildSwitchRow('UPI', user.isUpi),
+                                            // _buildSwitchRow(
+                                            //     'Cash', user.isCash),
+                                            // _buildSwitchRow(
+                                            //     'Later', user.isLater),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                    actions: <Widget>[
+                                      Expanded(
+                                        child: TextField(
+                                          controller: paymentController,
+                                          decoration: InputDecoration(
+                                              border: UnderlineInputBorder(),
+                                              focusedBorder:
+                                                  OutlineInputBorder()),
+                                        ),
+                                      ),
+                                      _buildActionButtons(context),
+                                    ],
+                                  );
+                                },
+                              );
+                              //  _showProfileDialog(context, name, userImage);
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius: const BorderRadius.all(
+                                    Radius.circular(10.0)),
+                                color: Colors.white,
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.withOpacity(0.5),
+                                    spreadRadius: 2,
+                                    blurRadius: 5,
+                                    offset: const Offset(0, 3),
+                                  ),
+                                ],
+                              ),
+                              child: Center(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Container(
+                                      height: 60,
+                                      width: 60,
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(30),
+                                          color: Colors.grey,
+                                          border: Border.all(
+                                            width: 3,
+                                            color: (user.isCash == true ||
+                                                    user.isLater == true ||
+                                                    user.isUpi == true)
+                                                ? const Color.fromARGB(
+                                                    255, 28, 231, 35)
+                                                : Colors.transparent,
+                                          )),
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(30),
+                                        child: Image.network(
+                                          user.profileImage,
+                                          fit: BoxFit.contain,
+                                        ),
+                                      ),
+                                    ),
+                                    // CircleAvatar(
+                                    //   radius: 30,
+                                    //   backgroundImage:
+                                    //       NetworkImage(user.profileImage),
+                                    // ),
+                                    const SizedBox(height: 20),
+                                    Text(
+                                      user.name,
+                                      textAlign: TextAlign.center,
+                                      style: const TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 18.0,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                    // child: buildGridView(viewModel.users),
                   ),
                 ),
                 Positioned(
@@ -67,12 +266,70 @@ class _HomeScreenState extends State<HomeScreen> {
                     ],
                   ),
                 ),
-                buildAlphabetRow(_viewModel.users, context),
+                buildAlphabetRow(viewModel.users, context),
               ],
             );
           }
         },
       ),
+    );
+  }
+
+  Widget _buildDialogContentRow(User user, String userImage, String name) {
+    return Column(
+      children: [
+        CircleAvatar(radius: 20, backgroundImage: NetworkImage(userImage)),
+        Text(name),
+      ],
+    );
+  }
+
+  // Widget _buildSwitchRow(String text, bool buttonValue) {
+  //   return Row(
+  //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //     children: [
+  //       Text(text),
+  //       Switch(
+  //         value: buttonValue,
+  //         onChanged: (value) {
+  //           setState(() {
+  //             buttonValue = value;
+  //           });
+  //         },
+  //       ),
+  //     ],
+  //   );
+  // }
+
+  Widget _buildTextFieldContainer() {
+    return Container(
+      height: 40,
+      width: 240,
+      decoration: BoxDecoration(
+        color: Colors.lightBlue[100],
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: const Center(
+        child: Text(
+          '2500',
+          style: TextStyle(color: Colors.black),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildActionButtons(BuildContext context) {
+    return Row(
+      children: [
+        TextButton(
+          onPressed: () => Navigator.of(context).pop(),
+          child: const Text('Save'),
+        ),
+        TextButton(
+          onPressed: () => Navigator.of(context).pop(),
+          child: const Text('Cancel'),
+        ),
+      ],
     );
   }
 }
