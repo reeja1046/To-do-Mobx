@@ -1,12 +1,9 @@
 class User {
-  String firstName;
-  String lastName;
-  String profilePic;
+  String name;
+  String profileImage;
 
   User({
-    required this.firstName,
-    required this.lastName,
-    required this.profilePic,
+    required this.name,
+    required this.profileImage,
   });
 }
-

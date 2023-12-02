@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:machine_test/home/model/model.dart';
 
 AppBar buildAppBar() {
   return AppBar(
@@ -11,12 +12,10 @@ AppBar buildAppBar() {
   );
 }
 
-ElevatedButton buildRoundButton(IconData icon, BuildContext context) {
+ElevatedButton buildRoundButton(
+    IconData icon, BuildContext context, VoidCallback onPressed) {
   return ElevatedButton(
-    onPressed: () {
-      // Call the function to show the alert dialog
-      showAlertDialog(context);
-    },
+    onPressed: onPressed, // Call the provided onPressed function here
     style: ElevatedButton.styleFrom(
       shape: const CircleBorder(),
       padding: const EdgeInsets.all(16.0),
@@ -62,55 +61,160 @@ void showAlertDialog(BuildContext context) {
   );
 }
 
-GridView buildGridView(List<String> names, List<String> userImages) {
+GridView buildGridView(List<User> users) {
   return GridView.builder(
-    itemCount: names.length,
+    itemCount: users.length,
     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
       crossAxisCount: 2,
       crossAxisSpacing: 15.0,
       mainAxisSpacing: 15.0,
     ),
     itemBuilder: (BuildContext context, int index) {
-      return buildGridTile(names[index], userImages[index]);
+      return buildGridTile(
+        context,
+        users[index].name,
+        users[index].profileImage,
+      );
     },
   );
 }
 
-GridTile buildGridTile(String name, String userImage) {
+GridTile buildGridTile(BuildContext context, String name, String userImage) {
   return GridTile(
-    child: Container(
-      decoration: BoxDecoration(
-        borderRadius: const BorderRadius.all(Radius.circular(10.0)),
-        color: Colors.white,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.5),
-            spreadRadius: 2,
-            blurRadius: 5,
-            offset: const Offset(0, 3),
-          ),
-        ],
-      ),
-      child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            CircleAvatar(
-              radius: 30,
-              backgroundImage: NetworkImage(userImage),
-            ),
-            const SizedBox(height: 20),
-            Text(
-              name.toString(),
-              style: const TextStyle(
-                color: Colors.black,
-                fontSize: 18.0,
-              ),
+    child: GestureDetector(
+      onTap: () {
+        _showProfileDialog(
+            context, name, userImage); // Show alert dialog on tap
+      },
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: const BorderRadius.all(Radius.circular(10.0)),
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.5),
+              spreadRadius: 2,
+              blurRadius: 5,
+              offset: const Offset(0, 3),
             ),
           ],
         ),
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              CircleAvatar(
+                radius: 30,
+                backgroundImage: NetworkImage(userImage),
+              ),
+              const SizedBox(height: 20),
+              Text(
+                name.toString(),
+                style: const TextStyle(
+                  color: Colors.black,
+                  fontSize: 18.0,
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     ),
+  );
+}
+
+void _showProfileDialog(BuildContext context, String name, String userImage) {
+  bool isSwitched = false;
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        content: Container(
+          width: MediaQuery.of(context).size.width * 0.7,
+          height: MediaQuery.of(context).size.height * 0.28,
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                CircleAvatar(
+                    radius: 20, backgroundImage: NetworkImage(userImage)),
+                Text(name),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text('UPI'),
+                    SizedBox(
+                        width:
+                            10), // Add some space between the text and the switch
+                    Switch(
+                      value: isSwitched,
+                      onChanged: (value) {
+                        // Update the state when the switch is toggled
+                        // setState(() {
+                        //   isSwitched = value;
+                        // });
+                      },
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text('Cash'),
+                    SizedBox(width: 10),
+                    Switch(
+                      value: isSwitched,
+                      onChanged: (value) {},
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text('Later'),
+                    SizedBox(width: 10),
+                    Switch(
+                      value: isSwitched,
+                      onChanged: (value) {},
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
+        actions: <Widget>[
+          Container(
+            height: 40,
+            width: 240,
+            decoration: BoxDecoration(
+              color: Colors.lightBlue[100],
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: TextField(
+              decoration: InputDecoration(
+                border: InputBorder.none,
+              ),
+            ),
+          ),
+          Row(
+            children: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: const Text('Save'),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: const Text('Cancel'),
+              ),
+            ],
+          ),
+        ],
+      );
+    },
   );
 }
 
