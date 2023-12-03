@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:machine_test/home/model/model.dart';
 import 'package:machine_test/home/view/widgets/gridview.dart';
 
+//Builds the two round button on the homescreen
 ElevatedButton buildRoundButton(
     IconData icon, BuildContext context, VoidCallback onPressed) {
   return ElevatedButton(
@@ -14,6 +15,7 @@ ElevatedButton buildRoundButton(
   );
 }
 
+//Builds the alphabet button at the bottom of the home screen
 Widget buildAlphabetRow(List<User> allUsers, BuildContext context) {
   final List<String> alphabets = List.generate(
     26,

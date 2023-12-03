@@ -20,7 +20,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
-    viewModel.fetchUsers();
+    viewModel.fetchUsers(); // Fetching users using viewModel
     paymentController.text = '2500';
     super.initState();
   }
@@ -103,8 +103,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   value: viewModel
                                                       .users[index].isCash,
                                                   onChanged: (value) {
-                                                    log(value.toString());
-                                                    log(user.isCash.toString());
                                                     setState(() {
                                                       isOn = !isOn;
                                                       viewModel.users[index]
@@ -128,8 +126,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   value: viewModel
                                                       .users[index].isLater,
                                                   onChanged: (value) {
-                                                    log(value.toString());
-                                                    log(user.isUpi.toString());
                                                     setState(() {
                                                       isOn = !isOn;
                                                       viewModel.users[index]
@@ -258,6 +254,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+// Method to build a row with user details in the dialog
   Widget _buildDialogContentRow(User user, String userImage, String name) {
     return Column(
       children: [
@@ -267,6 +264,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+// Method to build a text field container
   Widget _buildTextFieldContainer() {
     return Container(
       height: 40,
@@ -284,6 +282,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+// Method to build Save and Cancel buttons in a row
   Widget _buildActionButtons(BuildContext context) {
     return Row(
       children: [
