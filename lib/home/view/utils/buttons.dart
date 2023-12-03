@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:machine_test/home/model/model.dart';
-import 'package:machine_test/home/view/widgets/gridview.dart';
+import 'package:machine_test/home/model/user.dart';
+import 'package:machine_test/home/view/gridview.dart';
 
 //Builds the two round button on the homescreen
 ElevatedButton buildRoundButton(

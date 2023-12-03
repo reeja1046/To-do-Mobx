@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:machine_test/home/model/model.dart';
+import 'package:machine_test/home/model/user.dart';
 import 'package:mobx/mobx.dart';
 
 part 'home_viewmodel.g.dart';
@@ -14,8 +14,8 @@ abstract class _HomeViewModelBase with Store {
   @action
   Future<void> fetchUsers() async {
     try {
-      var response = await http.get(
-          Uri.parse('https://randomuser.me/api/?results=100&gender=male'));
+      var response = await http
+          .get(Uri.parse('https://randomuser.me/api/?results=100&gender=male'));
 
       if (response.statusCode == 200) {
         Map<String, dynamic> data = json.decode(response.body);

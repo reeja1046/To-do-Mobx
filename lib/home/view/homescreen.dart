@@ -1,10 +1,10 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:machine_test/home/model/model.dart';
+import 'package:machine_test/home/model/user.dart';
 import 'package:machine_test/home/view/paymentdetails.dart';
-import 'package:machine_test/home/view/widgets/buttons.dart';
-import 'package:machine_test/home/view/widgets/widgets.dart';
+import 'package:machine_test/home/view/utils/buttons.dart';
+import 'package:machine_test/home/view/utils/widgets.dart';
 import 'package:machine_test/main.dart';
 
 class HomeScreen extends StatefulWidget {

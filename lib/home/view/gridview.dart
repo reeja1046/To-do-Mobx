@@ -1,8 +1,6 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:machine_test/home/model/model.dart';
+import 'package:machine_test/home/model/user.dart';
 import 'package:machine_test/main.dart';
 
 class AlphabetSearchGrid extends StatefulWidget {
