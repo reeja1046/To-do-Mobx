@@ -40,12 +40,13 @@ Widget buildAlphabetRow(List<User> allUsers, BuildContext context) {
                       .where(
                           (user) => user.name.startsWith(letter.toUpperCase()))
                       .toList();
-                  // showDialog(
-                  //   context: context,
-                  //   builder: (BuildContext context) {
-                  //     return buildGridView(usersWithSelectedAlphabet);
-                  //   },
-                  // );
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlphabetSearchGrid(
+                          usersWithSelectedAlphabet: usersWithSelectedAlphabet);
+                    },
+                  );
                 },
                 child: Text(letter),
               ),

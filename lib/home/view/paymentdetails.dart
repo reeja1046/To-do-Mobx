@@ -1,8 +1,5 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:machine_test/home/model/model.dart';
-import 'package:machine_test/home/view_model/home_viewmodel.dart';
 import 'package:machine_test/main.dart';
 
 class PaymentDetailsScreen extends StatefulWidget {
@@ -22,9 +19,14 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
             element.isUpi == true ||
             element.isLater == true)
         .toList();
-    log('jkkkkkkkkkkkkkkkkkkkkkk');
-    log(payedUser.length.toString());
     super.initState();
+  }
+
+  // Function to clear the details
+  void clearDetails() {
+    setState(() {
+      payedUser.clear(); // Clear the payedUser list
+    });
   }
 
   @override
@@ -46,24 +48,29 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
             Navigator.pop(context);
           },
         ),
-        actions: const [
+        actions: [
           Row(
             children: [
-              Text(
-                'Clear',
-                style: TextStyle(color: Colors.blue),
+              GestureDetector(
+                onTap: () {
+                  clearDetails(); // Call the clearDetails function on button press
+                },
+                child: const Text(
+                  'Clear',
+                  style: TextStyle(color: Colors.blue),
+                ),
               ),
-              SizedBox(width: 16),
+              const SizedBox(width: 16),
             ],
           ),
         ],
       ),
       body: Padding(
-        padding: EdgeInsets.all(12.0),
+        padding: const EdgeInsets.all(12.0),
         child: SafeArea(
           child: Column(
             children: [
-              Row(
+              const Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
@@ -80,8 +87,6 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
                   shrinkWrap: true,
                   itemCount: payedUser.length,
                   itemBuilder: (context, index) {
-                    log('<<<<<<<<<<<<<message>>>>>>>>>>>>>');
-                    log(payedUser.length.toString());
                     return ListTile(
                       title: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,

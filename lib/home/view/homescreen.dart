@@ -1,11 +1,9 @@
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:machine_test/home/model/model.dart';
 import 'package:machine_test/home/view/paymentdetails.dart';
 import 'package:machine_test/home/view/widgets/buttons.dart';
-import 'package:machine_test/home/view/widgets/gridview.dart';
 import 'package:machine_test/home/view/widgets/widgets.dart';
 import 'package:machine_test/main.dart';
 
@@ -35,7 +33,7 @@ class _HomeScreenState extends State<HomeScreen> {
       body: Observer(
         builder: (_) {
           if (viewModel.users.isEmpty) {
-            return Center(
+            return const Center(
               child: CircularProgressIndicator(),
             );
           } else {
@@ -77,7 +75,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   MainAxisAlignment
                                                       .spaceBetween,
                                               children: [
-                                                Text('UPI'),
+                                                const Text('UPI'),
                                                 Switch(
                                                   value: viewModel
                                                       .users[index].isUpi,
@@ -102,7 +100,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   MainAxisAlignment
                                                       .spaceBetween,
                                               children: [
-                                                Text('Cash'),
+                                                const Text('Cash'),
                                                 Switch(
                                                   value: viewModel
                                                       .users[index].isCash,
@@ -127,7 +125,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   MainAxisAlignment
                                                       .spaceBetween,
                                               children: [
-                                                Text('Later'),
+                                                const Text('Later'),
                                                 Switch(
                                                   value: viewModel
                                                       .users[index].isLater,
@@ -147,12 +145,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 ),
                                               ],
                                             ),
-
-                                            // _buildSwitchRow('UPI', user.isUpi),
-                                            // _buildSwitchRow(
-                                            //     'Cash', user.isCash),
-                                            // _buildSwitchRow(
-                                            //     'Later', user.isLater),
                                           ],
                                         ),
                                       ),
@@ -161,7 +153,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       Expanded(
                                         child: TextField(
                                           controller: paymentController,
-                                          decoration: InputDecoration(
+                                          decoration: const InputDecoration(
                                               border: UnderlineInputBorder(),
                                               focusedBorder:
                                                   OutlineInputBorder()),
@@ -172,7 +164,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                   );
                                 },
                               );
-                              //  _showProfileDialog(context, name, userImage);
                             },
                             child: Container(
                               decoration: BoxDecoration(
@@ -216,11 +207,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                         ),
                                       ),
                                     ),
-                                    // CircleAvatar(
-                                    //   radius: 30,
-                                    //   backgroundImage:
-                                    //       NetworkImage(user.profileImage),
-                                    // ),
                                     const SizedBox(height: 20),
                                     Text(
                                       user.name,
@@ -238,7 +224,6 @@ class _HomeScreenState extends State<HomeScreen> {
                         );
                       },
                     ),
-                    // child: buildGridView(viewModel.users),
                   ),
                 ),
                 Positioned(
@@ -283,23 +268,6 @@ class _HomeScreenState extends State<HomeScreen> {
       ],
     );
   }
-
-  // Widget _buildSwitchRow(String text, bool buttonValue) {
-  //   return Row(
-  //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  //     children: [
-  //       Text(text),
-  //       Switch(
-  //         value: buttonValue,
-  //         onChanged: (value) {
-  //           setState(() {
-  //             buttonValue = value;
-  //           });
-  //         },
-  //       ),
-  //     ],
-  //   );
-  // }
 
   Widget _buildTextFieldContainer() {
     return Container(
