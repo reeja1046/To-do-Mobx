@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+// Builds the app bar with a title and styling
 AppBar buildAppBar() {
   return AppBar(
     title: const Text(
@@ -11,12 +12,13 @@ AppBar buildAppBar() {
   );
 }
 
+// Displays an alert dialog to enter visitor details
 void showAlertDialog(BuildContext context) {
   showDialog(
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
-        backgroundColor: Color.fromARGB(255, 224, 240, 252),
+        backgroundColor:const Color.fromARGB(255, 224, 240, 252),
         title: const Center(child: Text('Enter visitor details')),
         content: Column( 
           mainAxisSize: MainAxisSize.min,
@@ -24,7 +26,7 @@ void showAlertDialog(BuildContext context) {
           children: [
             _buildTextBoxWithIcon(
                 hintText: 'Visitor name', prefixIcon: Icons.person),
-            SizedBox(height: 20),
+           const SizedBox(height: 20),
             _buildTextBoxWithIcon(
                 hintText: 'Sponsor name', prefixIcon: Icons.person),
           ],
@@ -34,13 +36,13 @@ void showAlertDialog(BuildContext context) {
             onPressed: () {
               Navigator.of(context).pop();
             },
-            child: Text('Cancel'),
+            child: const Text('Cancel'),
           ),
           TextButton(
             onPressed: () {
               Navigator.of(context).pop();
             },
-            child: Text('Save'),
+            child: const Text('Save'),
           ),
         ],
       );
@@ -48,6 +50,7 @@ void showAlertDialog(BuildContext context) {
   );
 }
 
+// Builds a text form field with an icon for inputting text
 Widget _buildTextBoxWithIcon(
     {required String hintText, required IconData prefixIcon}) {
   return Container(

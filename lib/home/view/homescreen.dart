@@ -80,8 +80,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   value: viewModel
                                                       .users[index].isUpi,
                                                   onChanged: (value) {
-                                                    log(value.toString());
-                                                    log(user.isUpi.toString());
                                                     setState(() {
                                                       isOn = !isOn;
                                                       viewModel.users[index]

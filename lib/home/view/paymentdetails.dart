@@ -103,7 +103,8 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
                               : (payedUser[index].isCash)
                                   ? 'Cash'
                                   : 'Later'),
-                          Text('10.00'),
+                          Text(
+                              '${DateTime.now().hour}:${DateTime.now().minute}'),
                         ],
                       ),
                     );
